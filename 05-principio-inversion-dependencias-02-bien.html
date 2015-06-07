@@ -1,0 +1,85 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Principios SOLID con ECMAScript 6, el nuevo estándar de JavaScript - 05 - Principio de Inversión de Dependencias (Bien implementado)</title>
+  <script src="babel/browser.js"></script>
+</head>
+<body>
+  <h1>Principios SOLID con ECMAScript 6, el nuevo estándar de JavaScript</h1>
+  <h2>05 - Principio de Inversión de Dependencias (Bien implementado)</h2>
+  <p>Ver código fuente y la consola del navegador</p>
+  <div id="imprimir"></div>
+  <script type="text/babel">
+  class FormateadorDeDatos {
+    
+    formatearDatos(datos) {
+      console.log("Formateando datos...");
+      return "******************************\n"
+            +datos+"\n"
+            +"******************************";
+    }
+  }
+
+  class FormateadorDeDatosMayusculas extends FormateadorDeDatos {
+    
+    formatearDatos(datos) {
+      var datosFormateados = super.formatearDatos(datos);
+      return datosFormateados.toUpperCase();
+    }
+  }
+
+  class FormateadorDeDatosMinusculas extends FormateadorDeDatos {
+    
+    formatearDatos(datos) {
+      var datosFormateados = super.formatearDatos(datos);
+      return datosFormateados.toLowerCase();
+    }
+  }
+  
+  class ImpresoraDeDatos {
+    
+    imprimirDatos(datos) {
+      throw new Error("Método no implementado");
+    }
+  }
+  
+  class ImpresoraDeDatosPorConsola extends ImpresoraDeDatos {
+    
+    imprimirDatos(datos) {
+      console.log("Imprimiendo datos...");
+      console.log(datos);
+    }
+  }
+  
+  class ImpresoraDeDatosEnCapa extends ImpresoraDeDatos {
+    
+    imprimirDatos(datos) {
+      console.log("Imprimiendo datos...");
+      var capa = this.dameCapa();
+      capa.innerHTML += "<br />"+datos;
+    }
+    
+    dameCapa() {
+      return document.getElementById("imprimir");
+    }
+  }
+  
+  class ProcesadorDeDatos {
+    
+    constructor(_formateador, _impresora) {
+      this.formateador = _formateador;
+      this.impresora = _impresora;
+    }
+    
+    procesaDatos(datos) {
+      var datosFormateados = this.formateador.formatearDatos(datos);
+      this.impresora.imprimirDatos(datosFormateados);
+    }
+  }
+  
+  var p = new ProcesadorDeDatos(new FormateadorDeDatosMayusculas(), new ImpresoraDeDatosEnCapa());
+  p.procesaDatos("Principios SOLID con JavaScipt");
+  </script>
+</body>
+</html>

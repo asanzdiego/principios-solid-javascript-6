@@ -1,0 +1,75 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Principios SOLID con ECMAScript 6, el nuevo estándar de JavaScript - 03 - Principio de Sustitución de Liskov</title>
+  <script src="babel/browser.js"></script>
+</head>
+<body>
+  <h1>Principios SOLID con ECMAScript 6, el nuevo estándar de JavaScript</h1>
+  <h2>03 - Principio de Sustitución de Liskov</h2>
+  <p>Ver código fuente y la consola del navegador</p>
+  <script type="text/babel">
+  class FormateadorDeDatos {
+    
+    formatearDatos(datos) {
+      console.log("Formateando datos...");
+      return "******************************\n"
+            +datos+"\n"
+            +"******************************";
+    }
+  }
+
+  class FormateadorDeDatosMayusculas extends FormateadorDeDatos {
+    
+    formatearDatos(datos) {
+      var datosFormateados = super.formatearDatos(datos);
+      return datosFormateados.toUpperCase();
+    }
+  }
+
+  class FormateadorDeDatosMinusculas extends FormateadorDeDatos {
+    
+    formatearDatos(datos) {
+      var datosFormateados = super.formatearDatos(datos);
+      return datosFormateados.toLowerCase();
+    }
+  }
+  
+  class ImpresoraDeDatos {
+    
+    imprimirDatos(datos) {
+      console.log("Imprimiendo datos...");
+      console.log(datos);
+    }
+  }
+  
+  class ProcesadorDeDatos {
+    
+    procesaDatos(datos, tipoDeFormateo) {
+      
+      var formateador = this.dameFormateador(tipoDeFormateo);
+      var datosFormateados = formateador.formatearDatos(datos);
+      var impresora = new ImpresoraDeDatos();
+      impresora.imprimirDatos(datosFormateados);
+    }
+    
+    dameFormateador(tipoDeFormateo) {
+      switch(tipoDeFormateo) {
+        case 'M':
+          return new FormateadorDeDatosMayusculas();
+        case 'm':
+          return new FormateadorDeDatosMinusculas();
+        default:
+          return new FormateadorDeDatos();
+      }
+    }
+  }
+  
+  var p = new ProcesadorDeDatos();
+  p.procesaDatos("Principios SOLID con JavaScipt");
+  p.procesaDatos("Principios SOLID con JavaScipt", 'M');
+  p.procesaDatos("Principios SOLID con JavaScipt", 'm');
+  </script>
+</body>
+</html>

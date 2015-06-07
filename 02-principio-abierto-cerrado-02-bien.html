@@ -1,0 +1,78 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Principios SOLID con ECMAScript 6, el nuevo estándar de JavaScript - 02 - Principio Abierto/Cerrado (Bien implementado)</title>
+  <script src="babel/browser.js"></script>
+</head>
+<body>
+  <h1>Principios SOLID con ECMAScript 6, el nuevo estándar de JavaScript</h1>
+  <h2>02 - Principio Abierto/Cerrado (Bien implementado)</h2>
+  <p>Ver código fuente y la consola del navegador</p>
+  <script type="text/babel">
+  class FormateadorDeDatos {
+    
+    formatearDatos(datos) {
+      console.log("Formateando datos...");
+      return "******************************"
+            +"\n"+datos+"\n"
+            +"******************************";
+    }
+  }
+
+  class FormateadorDeDatosMayusculas extends FormateadorDeDatos {
+    
+    formatearDatos(datos) {
+      var datosFormateados = super.formatearDatos(datos);
+      return datosFormateados.toUpperCase();
+    }
+  }
+
+  class FormateadorDeDatosMinusculas extends FormateadorDeDatos {
+    
+    formatearDatos(datos) {
+      var datosFormateados = super.formatearDatos(datos);
+      return datosFormateados.toLowerCase();
+    }
+  }
+  
+  class ImpresoraDeDatos {
+    
+    imprimirDatos(datos) {
+      console.log("Imprimiendo datos...");
+      console.log(datos);
+    }
+  }
+    
+  class ProcesadorDeDatos {
+    
+    procesaDatos(datos, tipoDeFormateo) {
+      
+      var datosFormateados = "";
+      
+      switch(tipoDeFormateo) {
+        case 'M':
+          var formateador = new FormateadorDeDatosMayusculas();
+          datosFormateados = formateador.formatearDatos(datos, tipoDeFormateo);
+          break;
+        case 'm':
+          var formateador = new FormateadorDeDatosMinusculas();
+          datosFormateados = formateador.formatearDatos(datos, tipoDeFormateo);
+          break;
+        default:
+          var formateador = new FormateadorDeDatos();
+          datosFormateados = formateador.formatearDatos(datos, tipoDeFormateo);
+      }
+      
+      var impresora = new ImpresoraDeDatos();
+      impresora.imprimirDatos(datosFormateados);
+    }
+  }
+  
+  var p = new ProcesadorDeDatos();
+  p.procesaDatos("Principios SOLID con JavaScipt");
+  p.procesaDatos("Principios SOLID con JavaScipt", 'M');
+  p.procesaDatos("Principios SOLID con JavaScipt", 'm');
+  </script>
+</body>
+</html>

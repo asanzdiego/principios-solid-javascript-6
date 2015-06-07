@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Principios SOLID con ECMAScript 6, el nuevo estándar de JavaScript - 00 - Ejemplo de inicio</title>
+  <script src="babel/browser.js"></script>
+</head>
+<body>
+  <h1>Principios SOLID con ECMAScript 6, el nuevo estándar de JavaScript</h1>
+  <h2>00 - Ejemplo de inicio</h2>
+  <p>Ver código fuente y la consola del navegador</p>
+  <script type="text/babel">
+  class ProcesadorDeDatos {
+
+    procesaDatos(datos) {
+      var datosFormateados = this.formatearDatos(datos);
+      this.imprimirDatos(datosFormateados);
+    }
+
+    formatearDatos(datos) {
+      console.log("Formateando datos...");
+      return "******************************"
+            +"\n"+datos+"\n"
+            +"******************************";
+    }
+
+    imprimirDatos(datos) {
+      console.log("Imprimiendo datos...");
+      console.log(datos);
+    }
+  }
+  
+  var p = new ProcesadorDeDatos();
+  p.procesaDatos("Principios SOLID con JavaScipt");
+  </script>
+</body>
+</html>

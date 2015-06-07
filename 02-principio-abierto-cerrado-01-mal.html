@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Principios SOLID con ECMAScript 6, el nuevo estándar de JavaScript - 02 - Principio Abierto/Cerrado (Mal implementado)</title>
+  <script src="babel/browser.js"></script>
+</head>
+<body>
+  <h1>Principios SOLID con ECMAScript 6, el nuevo estándar de JavaScript</h1>
+  <h2>02 - Principio Abierto/Cerrado (Mal implementado)</h2>
+  <p>Ver código fuente y la consola del navegador</p>
+  <script type="text/babel">
+  class FormateadorDeDatos {
+
+    formatearDatos(datos, tipoDeFormateo) {
+      console.log("Formateando datos...");
+      var datosFormateados = "******************************"
+            +"\n"+datos+"\n"
+            +"******************************";
+      switch(tipoDeFormateo) {
+        case 'M':
+          return datosFormateados.toUpperCase();
+        case 'm':
+          return datosFormateados.toLowerCase();
+        default:
+          return datosFormateados;
+      }
+    }
+  }
+  
+  class ImpresoraDeDatos {
+    
+    imprimirDatos(datos) {
+      console.log("Imprimiendo datos...");
+      console.log(datos);
+    }
+  }
+    
+  class ProcesadorDeDatos {
+    
+    procesaDatos(datos, tipoDeFormateo) {
+      
+      var formateador = new FormateadorDeDatos();
+      var datosFormateados = formateador.formatearDatos(datos, tipoDeFormateo);
+      
+      var impresora = new ImpresoraDeDatos();
+      impresora.imprimirDatos(datosFormateados);
+    }
+  }
+  
+  var p = new ProcesadorDeDatos();
+  p.procesaDatos("Principios SOLID con JavaScipt");
+  p.procesaDatos("Principios SOLID con JavaScipt", 'M');
+  p.procesaDatos("Principios SOLID con JavaScipt", 'm');
+  </script>
+</body>
+</html>
